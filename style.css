@@ -41,6 +41,11 @@ canvas#board {
   width: 140px;
 }
 
+.stats-row,
+.side-buttons {
+  display: contents;
+}
+
 .panel {
   background: #1f2937;
   border: 2px solid #374151;
@@ -160,25 +165,63 @@ button#pause:hover {
 }
 
 @media (max-width: 500px) {
-  .game {
-    flex-direction: column;
-    align-items: center;
+  body {
+    gap: 8px;
+    padding: 6px;
+  }
+
+  /* Flatten .game and .side so all pieces become direct, reorderable
+     children of body: board + controls stay near the top, stats drop down. */
+  .game,
+  .side {
+    display: contents;
+  }
+
+  .board-wrap {
+    order: 1;
   }
 
   canvas#board {
-    max-width: min(300px, 80vw);
+    max-width: min(260px, 65vw);
     height: auto;
   }
 
-  .side {
+  .touch-controls {
+    order: 2;
+  }
+
+  .tbtn {
+    padding: 12px 0;
+    font-size: 18px;
+  }
+
+  .next-panel {
+    order: 3;
+    width: 100px;
+    padding: 4px;
+  }
+
+  .next-panel h3 {
+    font-size: 11px;
+    margin-bottom: 2px;
+  }
+
+  .next-panel canvas#next {
+    width: 60px;
+    height: 60px;
+  }
+
+  .stats-row {
+    order: 4;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
     width: 100%;
     max-width: 320px;
-    flex-direction: row;
-    flex-wrap: wrap;
     justify-content: center;
   }
 
-  .side .panel {
+  .stats-row .panel {
     flex: 1 1 80px;
   }
 
@@ -186,7 +229,16 @@ button#pause:hover {
     display: none;
   }
 
-  .side button {
+  .side-buttons {
+    order: 5;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .side-buttons button {
     flex: 1 1 100%;
   }
 }
