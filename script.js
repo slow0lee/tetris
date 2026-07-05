@@ -314,4 +314,42 @@ document.addEventListener('keydown', (e) => {
 restartBtn.addEventListener('click', startGame);
 pauseBtn.addEventListener('click', togglePause);
 
+function canAct() {
+  return !paused && !gameOver;
+}
+
+function bindRepeatButton(el, action, delay = 200, interval = 80) {
+  let timer = null;
+  const start = (e) => {
+    e.preventDefault();
+    if (!canAct()) return;
+    action();
+    timer = setTimeout(function repeat() {
+      if (canAct()) action();
+      timer = setTimeout(repeat, interval);
+    }, delay);
+  };
+  const stop = () => {
+    clearTimeout(timer);
+    timer = null;
+  };
+  el.addEventListener('pointerdown', start);
+  el.addEventListener('pointerup', stop);
+  el.addEventListener('pointercancel', stop);
+  el.addEventListener('pointerleave', stop);
+}
+
+function bindTapButton(el, action) {
+  el.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    if (canAct()) action();
+  });
+}
+
+bindRepeatButton(document.getElementById('tLeft'), () => move(-1));
+bindRepeatButton(document.getElementById('tRight'), () => move(1));
+bindRepeatButton(document.getElementById('tDown'), softDrop);
+bindTapButton(document.getElementById('tRotate'), rotate);
+bindTapButton(document.getElementById('tDrop'), hardDrop);
+
 startGame();

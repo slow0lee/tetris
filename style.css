@@ -6,11 +6,15 @@ body {
   margin: 0;
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 16px;
+  padding: 12px;
   background: #111827;
   font-family: 'Segoe UI', sans-serif;
   color: #e5e7eb;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .game {
@@ -112,4 +116,77 @@ button#pause:hover {
   font-weight: bold;
   color: #f9fafb;
   text-shadow: 0 0 10px rgba(0,0,0,0.8);
+}
+
+.touch-controls {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 320px;
+}
+
+.touch-row {
+  display: flex;
+  gap: 10px;
+}
+
+.tbtn {
+  flex: 1;
+  padding: 16px 0;
+  border: none;
+  border-radius: 8px;
+  background: #374151;
+  color: #f9fafb;
+  font-size: 20px;
+  touch-action: none;
+  user-select: none;
+  cursor: pointer;
+}
+
+.tbtn:active {
+  background: #4b5563;
+}
+
+.tbtn.wide {
+  font-size: 15px;
+}
+
+/* Show on touch devices, or narrow screens where a keyboard is unlikely */
+@media (hover: none) and (pointer: coarse), (max-width: 600px) {
+  .touch-controls {
+    display: flex;
+  }
+}
+
+@media (max-width: 500px) {
+  .game {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  canvas#board {
+    max-width: min(300px, 80vw);
+    height: auto;
+  }
+
+  .side {
+    width: 100%;
+    max-width: 320px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .side .panel {
+    flex: 1 1 80px;
+  }
+
+  .help {
+    display: none;
+  }
+
+  .side button {
+    flex: 1 1 100%;
+  }
 }
